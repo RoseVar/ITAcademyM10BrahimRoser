@@ -1,0 +1,54 @@
+package floristShop.views;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class StockPanel extends JPanel {
+	// Atributes
+	private JLabel titleAction;
+	private JTextArea stockView;
+
+
+	// Constructor
+	public StockPanel() {
+		initComponents();
+	}
+
+	/**
+	 * Method for create the view and components and data of it
+	 */
+	private void initComponents() {
+
+		// Set a layout to the class
+		this.setLayout(new BorderLayout());
+
+		// create a new panel for title
+		JPanel titlePanel = new JPanel();
+		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		titleAction = new JLabel("ESTE ES EL STOCK ACTUAL:");
+		titlePanel.add(titleAction);
+		this.add(titlePanel, BorderLayout.NORTH);
+
+		// create a new panel for view stock
+		String data = "Arbol[nombre: peral, altura: 15.2]" + "\n\r" + "Flor [nombre:calendula, color: amarillo]"
+				+ "\n\r" + "Decoracion[nombre: maceta, material: ceramica]";
+		// nota: acuerdate de usar System.LineSeparator en lugar de "\n\r"
+		stockView = new JTextArea(data);
+		stockView.setEditable(false);
+
+		JScrollPane scrollPane = new JScrollPane(stockView);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setAlignmentX(LEFT_ALIGNMENT);
+		this.add(scrollPane, BorderLayout.CENTER);
+        		
+    		   
+    }
+    
+
+}

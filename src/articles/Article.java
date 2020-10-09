@@ -36,7 +36,7 @@ public abstract class Article {
 	
 	//Metodo abstracto que todas las clases hijas deben implementar
 	
-	public abstract String toString() ;
+	public abstract String toStringf() ;
 	
 	
 

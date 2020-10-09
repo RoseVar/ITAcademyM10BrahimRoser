@@ -31,14 +31,14 @@ public class Tree extends Article {
 	}
 	
 	//Método toString
-	public String toString(){
+	public String toStringf(){
 		String discription;
 		if (this.getName().isEmpty()) {
 			discription = "";
 		}else {
 			discription = "Nombre del artículo: " + this.getName();
 		}
-		discription += ", altura: " + this.height + " precio: " + this.getPrice();
+		discription += ", altura:" + this.height + ", precio:" + this.getPrice() +  "€";
 		return discription;
 	}
 	

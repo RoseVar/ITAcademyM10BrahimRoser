@@ -18,7 +18,7 @@ public class Flower extends Article {
 	
 	//A constructor to flowers without name
 	public Flower(double price, String color) {
-		super(price);
+		super("",price);
 		this.color = color;
 	}
 	
@@ -33,14 +33,14 @@ public class Flower extends Article {
 	}
 	
 	//Método toString
-		public String toString(){
-			String discription;
+		public String toStringf(){
+			String discription = "";
 			if (this.getName().isEmpty()) {
-				discription = "";
+				discription = "SinNombre";
 			}else {
 				discription = "Nombre del artículo: " + this.getName();
 			}
-			discription += ", color: " + this.color + " precio: " + this.getPrice();
+			discription += ", color:" + this.color + ", precio:" + this.getPrice() + "€";
 			return discription;
 		}
 	

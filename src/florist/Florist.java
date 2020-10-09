@@ -10,24 +10,21 @@ public class Florist {
 	//Atributos
 	
 	//I create a repository of the items: trees, flowers, decors and one to join them all
-	private ArrayList<Tree> trees = new ArrayList<Tree>();
-	private ArrayList<Flower> flowers = new ArrayList<Flower>();
-	private ArrayList<Decor> decors = new ArrayList<Decor>();
-	private ArrayList<ArrayList <Article>> articles = new ArrayList<ArrayList <Article>>();
+	private ArrayList<Tree> trees ;
+	private ArrayList<Flower> flowers;
+	private ArrayList<Decor> decors;
 	private String name;
 	
 	//Constructor
 	
 	public Florist(String name) {
-		/*
-		this.articles.addAll(this.flowers);
-		this.articles.addAll(this.trees);
-		this.articles.addAll(this.decors);
-		*I can't join all the lists of trees, flowers and decors in a unique articles arraylist
-		*/
+		trees = new ArrayList<Tree>();
+		flowers = new ArrayList<Flower>();
+		decors = new ArrayList<Decor>();
 		this.name = name;
 		
 	}
+	
 	
 	//Getters and setters
 	
@@ -65,14 +62,17 @@ public class Florist {
 	}
 	
 	public String toString() {//This method gives a String of all the items in the stock
-		String stock = "";
-		for (ArrayList<Article> itemsLists: articles) {
-			stock +=  itemsLists.getClass() + ":\n";//We show class name and add a space
-			for (Article item: itemsLists ) {
-				//We give the description of every item with spaces in between and giving the index
-				stock += (itemsLists.indexOf(item)+1)+item.toString() + "\n "; 
-			}
-			stock += "\n";
+		String stock = "Flores: "+ " \n";
+		for (Flower flor: this.flowers) {
+			stock += flor.toStringf() + " \n";
+		}
+		stock += "Árboles" + " \n";
+		for (Tree tree: this.trees) {
+			stock += tree.toStringf()+ " \n";
+		}
+		stock += "Artículos de decoracion: "+ " \n";
+		for (Decor decor: this.decors) {
+			stock += decor.toString()+ " \n";
 		}
 		return stock;//We give the result
 	}

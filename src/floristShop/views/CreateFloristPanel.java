@@ -89,7 +89,7 @@ public class CreateFloristPanel  extends JPanel {
         constraints.weighty = 0.0;
         
         
-        //Button save tree
+        //Button save new Florist shop
         btSaveFlorist = new JButton ("Crear floristeria");
         btSaveFlorist.setActionCommand("addNewFloristShop");
         btSaveFlorist.addActionListener(myListener);
@@ -104,7 +104,7 @@ public class CreateFloristPanel  extends JPanel {
         pane.add(btSaveFlorist, constraints);
         
        
-        //Button save tree
+        //Button back to main
         btBack = new JButton ("Volver");
         btBack.setActionCommand("backFromCreate");
         btBack.addActionListener(myListener);

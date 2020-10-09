@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 public class CreateFloristPanel  extends JPanel {
     //Atributes 
     private JButton btSaveFlorist;
+    private JButton btBack;
     private JLabel titlePage;
     private JLabel nameFloristShop; 
     private JTextField fieldName;
@@ -90,7 +91,7 @@ public class CreateFloristPanel  extends JPanel {
         
         //Button save tree
         btSaveFlorist = new JButton ("Crear floristeria");
-        btSaveFlorist.setActionCommand("createFloristShop");
+        btSaveFlorist.setActionCommand("addNewFloristShop");
         btSaveFlorist.addActionListener(myListener);
 		constraints.fill= GridBagConstraints.NONE;
         constraints.gridx = 0;
@@ -103,6 +104,20 @@ public class CreateFloristPanel  extends JPanel {
         pane.add(btSaveFlorist, constraints);
         
        
+        //Button save tree
+        btBack = new JButton ("Volver");
+        btBack.setActionCommand("backFromCreate");
+        btBack.addActionListener(myListener);
+		constraints.fill= GridBagConstraints.NONE;
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth=GridBagConstraints.REMAINDER;
+        constraints.gridheight = 1;  
+        constraints.weighty = 1.0;
+        constraints.anchor= GridBagConstraints.CENTER;
+        constraints.insets =new Insets(10,10,20,10);
+        pane.add(btBack, constraints);
+        
         this.add(pane);
          		  
     		   

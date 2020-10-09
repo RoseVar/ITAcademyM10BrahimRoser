@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -12,20 +13,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DecorationPanel  extends JPanel {
+public class DecorationPanel  extends JPanel implements ActionListener{
     //Atributes 
     private JButton btSaveDecorationr;
-    private JButton btBack;
     private JLabel floristName;
     private JLabel nameDecoration;
     private JLabel materialDecoration;    
     private JTextField fieldName;
-    private JTextField fieldMaterial;   
-    ActionListener myListener;    
+    private JTextField fieldMaterial;     
     
     //Constructor
-    public DecorationPanel (ActionListener listener) {   
-        this.myListener= listener;
+    public DecorationPanel () {   
         initComponents();
     }
     
@@ -37,7 +35,7 @@ public class DecorationPanel  extends JPanel {
     private void initComponents() {   
     	
     	//Set a layout to the class
-    	this.setLayout(new BorderLayout());
+    	this.setLayout(new GridLayout(0,1));
 
     	//create a new panel
         JPanel pane = new JPanel();                
@@ -51,7 +49,7 @@ public class DecorationPanel  extends JPanel {
         //Presentation label with florist shop name
         //TODO recuperar nombre de la floristeria              
         String provName= "Floristeria Prueba";
-        floristName = new JLabel ("AÑADIR ARBOL A LA FLORISTERIA: \"" + provName+ "\"");
+        floristName = new JLabel ("FORMULARIO PARA AÑADIR DECORACION:");
 		constraints.fill= GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -121,8 +119,8 @@ public class DecorationPanel  extends JPanel {
         
         //Button save decoration
 		btSaveDecorationr = new JButton ("Añadir decoración al stock");
-		btSaveDecorationr.setActionCommand("addDecoration");
-		btSaveDecorationr.addActionListener(myListener);
+		btSaveDecorationr.setActionCommand("addDeco");
+		btSaveDecorationr.addActionListener(this);
 		constraints.fill= GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -135,14 +133,25 @@ public class DecorationPanel  extends JPanel {
                
         this.add(pane);
         
-        btBack = new JButton ("Atrás");
-        btBack.setActionCommand("back");
-        btBack.addActionListener(myListener);
-
-        this.add(btBack, BorderLayout.SOUTH);
-         		  
     		   
     }
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// Recover action
+		String action = e.getActionCommand();
+		// and depending on it
+		switch (action) {
+		case "addDeco": 
+			// TODO guardar datos de decoracion nueva
+			break;
+		default:
+			break;
+		}
+
+	}
     
 
 }

@@ -1,42 +1,37 @@
 package floristShop.views;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 
 public class MainFrame extends JFrame implements ActionListener{
-    //Atrtibutos
-    //Añadir modelo de datos myModel;
+    //Atributtes
+    //TODO Añadir modelo de datos myModel;
     ActionListener myListener;
     
     //Componentes
-    //MainPanel myPanel;
-    //pruebas:
-    //TreePanel myPanel;
+    MainPanel myPanel;
     //CreateFloristPanel myPanel;
-    ManageFloristShopPanel myPanel;
-    //FlowerPanel myPanel;
+    //ManageFloristShopPanel myPanel;
     
+   
     //Constructor
     public MainFrame(Object myModel) {
-        //this.myModel= myModel;
+        //TODO instanciar el modelo
+    	//this.myModel= myModel;
         myListener= this;
-        //this.myPanel= new MainPanel(myListener);   
-        //this.myPanel= new TreePanel(myListener);
+        this.myPanel= new MainPanel(myListener);   
         //this.myPanel= new CreateFloristPanel(myListener);        
-        this.myPanel= new ManageFloristShopPanel(myListener);
-        //this.myPanel= new FlowerPanel(myListener);
-                
+        //this.myPanel= new ManageFloristShopPanel(myListener);
+        
         initComponents();
 
     }
 
-    //Crear elementos
+    //Create elements
     private void initComponents() {
         this.setTitle("FlowerGest: management of Florist's Shops");        
         getContentPane().add(myPanel);
@@ -46,22 +41,48 @@ public class MainFrame extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	Container pane;
         //Recover action
-        String action = e.getActionCommand();
+        String action = e.getActionCommand();        
         //and depending on it...
         switch (action) {
-            case "seeFlorist":
-                //TODO
+            case "manageFlorist":            	            	
+            	//ask for actual Container and erase
+                pane = getContentPane();
+                pane.removeAll();
+                //create new and validate
+                ManageFloristShopPanel myMFPanel= new ManageFloristShopPanel(myListener);  
+                pane.add(myMFPanel);
+                validate();
+                repaint();
                 break;
-            case "addFlorist":
+            case "createFlorist":            	
+            	//ask for actual Container and erase
+                pane = getContentPane();
+                pane.removeAll();
+                //create new and validate
+                CreateFloristPanel myFPanel= new CreateFloristPanel(myListener);   
+                pane.add(myFPanel);
+                validate();
+                repaint();
+                break; 
+            case "addNewFloristShop": //from Create Florist Shop Panel
                 //TODO        	
-                break;  
-            case "addTree":
-                //TODO        	
-                break;  
-            case "createFloristShop":
-                //TODO        	
-                break;      
+                break;                 
+            case "backFromCreate"://from Create Florist Shop Panel
+                pane = getContentPane();
+                pane.removeAll();  
+                pane.add(myPanel);
+                validate();
+                repaint();
+                break;                
+            case "backFromManage"://from Manage Florist Shop Panel
+                pane = getContentPane();
+                pane.removeAll();  
+                pane.add(myPanel);
+                validate();  
+                repaint();
+                break;
             default: 
                 break;
         }

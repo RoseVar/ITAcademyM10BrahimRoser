@@ -1,10 +1,10 @@
 package floristShop.views;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -12,20 +12,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class FlowerPanel  extends JPanel {
+public class FlowerPanel  extends JPanel implements ActionListener {
     //Atributes 
     private JButton btSaveFlower;
-    private JButton btBack;
     private JLabel floristName;
     private JLabel nameFlower;
     private JLabel colourFlower;    
     private JTextField fieldName;
     private JTextField fieldColour;   
-    ActionListener myListener;    
     
     //Constructor
-    public FlowerPanel (ActionListener listener) {   
-        this.myListener= listener;
+    public FlowerPanel () {   
         initComponents();
     }
     
@@ -37,7 +34,7 @@ public class FlowerPanel  extends JPanel {
     private void initComponents() {   
     	
     	//Set a layout to the class
-    	this.setLayout(new BorderLayout());
+    	this.setLayout(new GridLayout(0,1));
 
     	//create a new panel
         JPanel pane = new JPanel();                
@@ -51,7 +48,7 @@ public class FlowerPanel  extends JPanel {
         //Presentation label with florist shop name
         //TODO recuperar nombre de la floristeria              
         String provName= "Floristeria Prueba";
-        floristName = new JLabel ("AÑADIR ARBOL A LA FLORISTERIA: \"" + provName+ "\"");
+        floristName = new JLabel ("FORMULARI PARA AÑADIR FLORES:");
 		constraints.fill= GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -122,7 +119,7 @@ public class FlowerPanel  extends JPanel {
         //Button save flower
 		btSaveFlower = new JButton ("Añadir flor al stock");
 		btSaveFlower.setActionCommand("addFlower");
-		btSaveFlower.addActionListener(myListener);
+		btSaveFlower.addActionListener(this);
 		constraints.fill= GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 3;
@@ -135,13 +132,25 @@ public class FlowerPanel  extends JPanel {
         
         this.add(pane);
          		  
-        btBack = new JButton ("Atrás");
-        btBack.setActionCommand("back");
-        btBack.addActionListener(myListener);
-
-        this.add(btBack, BorderLayout.SOUTH);
     		   
     }
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// Recover action
+		String action = e.getActionCommand();
+		// and depending on it
+		switch (action) {				
+			case "addFlower": 
+				//TODO guardar datos de flor nueva
+				break;					
+			default:
+				break;
+		}
+		
+	}
     
 
 }

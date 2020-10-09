@@ -1,18 +1,18 @@
 package floristShop.views;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 
@@ -60,12 +60,11 @@ public class MainPanel  extends JPanel {
         constraints.insets =new Insets(40,40,30,10);
         pane.add (textCreateFlorist, constraints);
         constraints.weightx = 0.0;
-        constraints.weighty = 0.0;
-        
-        
+        constraints.weighty = 0.0;                
         
 		btCreateFlorist = new JButton ("Crear");
-		btCreateFlorist.setActionCommand("addFlorist");
+		btCreateFlorist.setActionCommand("createFlorist");
+		btCreateFlorist.addActionListener(myListener);
         constraints.gridx = 2; 
         constraints.gridy = 0; 
         constraints.gridwidth = 1; 
@@ -91,15 +90,13 @@ public class MainPanel  extends JPanel {
         pane.add (textShowFlorist, constraints);
         constraints.weightx = 0.0;
         constraints.weighty = 0.0;
-
-       
-
         
         String[] dataTest= {"1-Floristeria Pepa", "2-Floristeria Paco"}; //TODO borrar a la larga
         myFlorisList = new JList (dataTest); //TODO falta meter datos buenos como parámetro
         myFlorisList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         myFlorisList.setLayoutOrientation(JList.VERTICAL);
         myFlorisList.setVisibleRowCount(-1);
+        //TODO falta añadir el listener
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 2;

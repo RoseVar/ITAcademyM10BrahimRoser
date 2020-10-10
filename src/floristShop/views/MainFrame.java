@@ -19,7 +19,7 @@ public class MainFrame extends JFrame implements ActionListener{
     
    
     //Constructor
-    public MainFrame(Object myModel) {
+    public MainFrame(/*Object myModel*/) {
         //TODO instanciar el modelo
     	//this.myModel= myModel;
         myListener= this;

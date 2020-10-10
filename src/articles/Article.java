@@ -34,9 +34,8 @@ public abstract class Article {
 		return this.price;
 	}
 	
-	//Metodo abstracto que todas las clases hijas deben implementar
-	
-	public abstract String toStringf() ;
+	//An abstract class that all subclasses must implement
+	public abstract String giveDiscription() ;
 	
 	
 

@@ -2,27 +2,27 @@ package articles;
 
 public class Tree extends Article {
 	
-	//Atributos
 	
+	//Atributos
 	private double height;
 	
-	//Constructor
 	
+	//Constructor
 	public Tree(String name, double price, double height) {
 		
 		super(name, price);//We call the superclass to assign to the parent attributes 
 		this.height = height;//We give the value height to our object
 	}
 	
-	//I also create a constructor en case the customer don't want to give a name to the tree
 	
+	//I also create a constructor en case the customer don't want to give a name to the tree
 	public Tree (double price, double height) {
 		super(price);
 		this.height = height;
 	}
 	
-	//Getter y Setter for height
 	
+	//Getter y Setter for height
 	public double getHeight() {
 		return this.height;
 	}
@@ -30,8 +30,9 @@ public class Tree extends Article {
 		this.height = height;
 	}
 	
-	//Método toString
-	public String toStringf(){
+	
+	//Discription of the object
+	public String giveDiscription(){
 		String discription;
 		if (this.getName().isEmpty()) {
 			discription = "";

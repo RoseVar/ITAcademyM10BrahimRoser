@@ -62,21 +62,23 @@ public class Florist {
 	}
 	
 	public String toString() {//This method gives a String of all the items in the stock
-		String stock = "Flores: "+ " \n";
-		for (Flower flor: this.flowers) {
-			stock += flor.toStringf() + " \n";
+		String stock = "Flores: "+ " \n";//We say that we are going to print flowers
+		for (Flower flor: this.flowers) {//We loop over our flower repository
+			stock += flor.giveDiscription() + " \n";//We give the discription of every single flower
 		}
+		//We do the same for trees, and dec,ors
 		stock += "Árboles" + " \n";
 		for (Tree tree: this.trees) {
-			stock += tree.toStringf()+ " \n";
+			stock += tree.giveDiscription()+ " \n";
 		}
 		stock += "Artículos de decoracion: "+ " \n";
 		for (Decor decor: this.decors) {
-			stock += decor.toString()+ " \n";
+			stock += decor.giveDiscription()+ " \n";
 		}
 		return stock;//We give the result
 	}
 	
+	//This function shows what we have in our stock by printing the discription of the florist
 	public void showStock() {
 		System.out.println(this.toString());
 	}

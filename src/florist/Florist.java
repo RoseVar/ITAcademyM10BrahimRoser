@@ -4,6 +4,9 @@ import java.util.*;
 
 import articles.*;
 
+/**
+ * @author Bhahim
+ */
 
 public class Florist {
 	
@@ -62,25 +65,25 @@ public class Florist {
 	}
 	
 	public String toString() {//This method gives a String of all the items in the stock
-		String stock = "Flores: "+ " \n";//We say that we are going to print flowers
+		String stock = "FLORES: "+ " \n";//We say that we are going to print flowers
 		for (Flower flor: this.flowers) {//We loop over our flower repository
 			stock += flor.giveDiscription() + " \n";//We give the discription of every single flower
 		}
 		//We do the same for trees, and dec,ors
-		stock += "Árboles" + " \n";
+		stock += "ÁRBOLES:" + " \n";
 		for (Tree tree: this.trees) {
 			stock += tree.giveDiscription()+ " \n";
 		}
-		stock += "Artículos de decoracion: "+ " \n";
+		stock += "ARTÍCULOS DE DECORACIÓN: "+ " \n";
 		for (Decor decor: this.decors) {
 			stock += decor.giveDiscription()+ " \n";
 		}
 		return stock;//We give the result
 	}
 	
-	//This function shows what we have in our stock by printing the discription of the florist
-	public void showStock() {
-		System.out.println(this.toString());
-	}
+//	//This function shows what we have in our stock by printing the discription of the florist
+//	public void showStock() {
+//		System.out.println(this.toString());
+//	}
 
 }

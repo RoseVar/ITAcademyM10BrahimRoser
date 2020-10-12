@@ -6,31 +6,42 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import florist.Florist;
+import florist.shops.Shops;
+import funcionalidades.ImplementedFuncionalities;
+
+/**
+ * @author Roser
+ */
+
 public class MainFrame extends JFrame implements ActionListener {
     //Atributtes
-    //TODO Añadir modelo de datos myModel;
+    //Shops myModel;
+    ImplementedFuncionalities myModel;
     ActionListener myListener;
-    
+    int selectedShop;
 
 	// Componentes
 	MainPanel myPanel;
-	// CreateFloristPanel myPanel;
-	// ManageFloristShopPanel myPanel;
+	CreateFloristPanel myFPanel;
 
 	// Constructor
-	public MainFrame(Object myModel) {
-		// TODO instanciar el modelo
-		// this.myModel= myModel;
+	public MainFrame(ImplementedFuncionalities myModel) {
+		//instanciate attributes
+		this.myModel= myModel;
 		myListener = this;
-		this.myPanel = new MainPanel(myListener);
-		// this.myPanel= new CreateFloristPanel(myListener);
-		// this.myPanel= new ManageFloristShopPanel(myListener);
+		selectedShop=0;
+		this.myPanel = new MainPanel(myListener, this.myModel);
+		//create elements
 		initComponents();
+
 	}
 	
 
 
-	// Create elements
+	/**
+	 * Method for creating components
+	 */
 	private void initComponents() {
 		this.setTitle("FlowerGest: management of Florist's Shops");
 		getContentPane().add(myPanel);
@@ -45,46 +56,56 @@ public class MainFrame extends JFrame implements ActionListener {
 		String action = e.getActionCommand();
 		// and depending on it...
 		switch (action) {
-		case "manageFlorist":
-			//Cargar el 
-			//ask for actual Container and erase
-			pane = getContentPane();
-			pane.removeAll();
-			// create new and validate
-			ManageFloristShopPanel myMFPanel = new ManageFloristShopPanel(myListener);
-			pane.add(myMFPanel);
-			validate();
-			repaint();
-			break;
-		case "createFlorist":
-			// ask for actual Container and erase
-			pane = getContentPane();
-			pane.removeAll();
-			// create new and validate
-			CreateFloristPanel myFPanel = new CreateFloristPanel(myListener);
-			pane.add(myFPanel);
-			validate();
-			repaint();
-			break;
-		case "addNewFloristShop": // from Create Florist Shop Panel
-			// TODO
-			break;
-		case "backFromCreate":// from Create Florist Shop Panel
-			pane = getContentPane();
-			pane.removeAll();
-			pane.add(myPanel);
-			validate();
-			repaint();
-			break;
-		case "backFromManage":// from Manage Florist Shop Panel
-			pane = getContentPane();
-			pane.removeAll();
-			pane.add(myPanel);
-			validate();
-			repaint();
-			break;
-		default:
-			break;
+			case "openFlorist":
+				//recover the index of the shop the user has selected
+				int shopSelected= myPanel.getSelectedShop();
+				//ask for actual Container and erase
+				pane = getContentPane();
+				pane.removeAll();			
+				// create new panel and validate
+				ManageFloristShopPanel myMFPanel = new ManageFloristShopPanel(myListener, myModel,shopSelected);
+				pane.add(myMFPanel);
+				validate();
+				repaint();
+				break;
+			case "createFlorist":
+				// ask for actual Container and erase
+				pane = getContentPane();
+				pane.removeAll();
+				// create new and validate
+				myFPanel = new CreateFloristPanel(myListener);
+				pane.add(myFPanel);
+				validate();
+				repaint();
+				break;
+			case "addNewFloristShop": // from Create Florist Shop Panel
+				//if this method recover a florist
+				Florist floToAdd= myFPanel.createProvisionalFlorist();
+				//if has recovered one florist, add to list of florists of model
+				if (floToAdd!=null) {
+					if (myModel.createFloristAction(floToAdd.getName())) { //if goes ok, inform user
+						myFPanel.setOKLabel();
+					}
+				}
+				break;
+			case "backFromCreate":// from Create Florist Shop Panel
+				pane = getContentPane();
+				pane.removeAll();
+				//re-create main panel so it recover the new florist created
+				this.myPanel = new MainPanel(myListener, this.myModel);	
+				pane.add(myPanel);
+				validate();
+				repaint();
+				break;
+			case "backFromManage":// from Manage Florist Shop Panel
+				pane = getContentPane();
+				pane.removeAll();
+				pane.add(myPanel);
+				validate();
+				repaint();
+				break;
+			default:
+				break;
 		}
 
 	}

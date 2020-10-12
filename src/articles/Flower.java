@@ -1,5 +1,9 @@
 package articles;
 
+/**
+ * @author Bhahim
+ */
+
 public class Flower extends Article {
 	
 	//Atributes

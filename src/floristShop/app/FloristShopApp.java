@@ -1,11 +1,16 @@
 package floristShop.app;
 
+			    
+
 import floristShop.views.MainFrame;
 
+/**
+ * @author Roser
+ */
 public class FloristShopApp {
 
-	public static void main(String[] args) {
-				    
+	public static void main(String[] args) {				    
+
 		    FloristShopApp myFloristManager = new FloristShopApp();
 	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	            @Override
@@ -23,6 +28,7 @@ public class FloristShopApp {
 	     */
 	    private void run() {
 	        //Instantiate model and main frame
+
 	        //myModel
 	        MainFrame myFrame = new MainFrame();
 	        //Put it in the center of screen

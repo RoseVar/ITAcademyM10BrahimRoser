@@ -1,5 +1,8 @@
 package articles;
 
+/**
+ * @author Bhahim
+ */
 public abstract class Article {
 	
 	//Constructor

@@ -8,13 +8,28 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import florist.Florist;
+import funcionalidades.ImplementedFuncionalities;
+
+
+/**
+ * @author Roser
+ */
+
 public class StockPanel extends JPanel {
 	// Atributes
+	private ImplementedFuncionalities myModel;
+	private int selectedShop;
+	private Florist myFlorist;
+	//components
 	private JLabel titleAction;
 	private JTextArea stockView;
 
 	// Constructor
-	public StockPanel() {
+	public StockPanel(ImplementedFuncionalities myModel, int selectedShop) {
+		this.myModel= myModel;
+		this.selectedShop= selectedShop;
+		myFlorist= myModel.getMyFlorists().get(selectedShop);
 		initComponents();
 	}
 
@@ -34,9 +49,9 @@ public class StockPanel extends JPanel {
 		this.add(titlePanel, BorderLayout.NORTH);
 
 		// create a new panel for view stock
-		String data = "Arbol[nombre: peral, altura: 15.2]" + "\n\r" + "Flor [nombre:calendula, color: amarillo]"
-				+ "\n\r" + "Decoracion[nombre: maceta, material: ceramica]";
-		// nota: acuerdate de usar System.LineSeparator en lugar de "\n\r"
+		//recover data 
+		String data= myFlorist.toString();
+		//set data to the JTextArea
 		stockView = new JTextArea(data);
 		stockView.setEditable(false);
 

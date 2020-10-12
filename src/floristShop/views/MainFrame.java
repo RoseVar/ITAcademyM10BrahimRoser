@@ -18,9 +18,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	// ManageFloristShopPanel myPanel;
 
 	// Constructor
-	public MainFrame(Object myModel) {
-		// TODO instanciar el modelo
-		// this.myModel= myModel;
+	public MainFrame() {
 		myListener = this;
 		this.myPanel = new MainPanel(myListener);
 		// this.myPanel= new CreateFloristPanel(myListener);

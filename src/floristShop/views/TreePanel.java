@@ -1,6 +1,5 @@
 package floristShop.views;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -135,7 +134,7 @@ public class TreePanel extends JPanel implements ActionListener {
 		String action = e.getActionCommand();
 		// and depending on it
 		switch (action) {
-		case "addTree": 
+		case "addTree":
 			// TODO guardar datos de arbol nuevo
 			break;
 		default:

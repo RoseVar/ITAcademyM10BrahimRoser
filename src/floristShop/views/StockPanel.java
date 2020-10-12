@@ -13,7 +13,6 @@ public class StockPanel extends JPanel {
 	private JLabel titleAction;
 	private JTextArea stockView;
 
-
 	// Constructor
 	public StockPanel() {
 		initComponents();
@@ -46,9 +45,7 @@ public class StockPanel extends JPanel {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setAlignmentX(LEFT_ALIGNMENT);
 		this.add(scrollPane, BorderLayout.CENTER);
-        		
-    		   
-    }
-    
+
+	}
 
 }

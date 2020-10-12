@@ -1,5 +1,9 @@
 package articles;
 
+/**
+ * @author Bhahim
+ */
+
 public class Tree extends Article {
 	
 	

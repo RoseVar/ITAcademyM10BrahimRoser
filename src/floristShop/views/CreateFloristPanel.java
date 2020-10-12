@@ -1,24 +1,30 @@
 package floristShop.views;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import florist.Florist;
 
+/**
+ * @author Roser
+ */
 public class CreateFloristPanel extends JPanel {
-	// Atributes
+	// Attributes
 	private JButton btSaveFlorist;
 	private JButton btBack;
 	private JLabel titlePage;
 	private JLabel nameFloristShop;
 	private JTextField fieldName;
+	private JLabel infoLabel;
 	ActionListener myListener;
+	Florist provFlorist;
 
 	// Constructor
 	public CreateFloristPanel(ActionListener listener) {
@@ -42,7 +48,6 @@ public class CreateFloristPanel extends JPanel {
 		pane.setLayout(mainLayout);
 
 		// Presentation label
-
 		titlePage = new JLabel("CREANDO UNA FLORISTERIA NUEVA");
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.gridx = 0;
@@ -97,22 +102,61 @@ public class CreateFloristPanel extends JPanel {
 		constraints.insets = new Insets(10, 10, 20, 10);
 		pane.add(btSaveFlorist, constraints);
 
+		// infoLabel
+		infoLabel = new JLabel();
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.gridx = 0;
+		constraints.gridy = 4;
+		constraints.gridwidth = GridBagConstraints.REMAINDER;
+		constraints.gridheight = 1;
+		constraints.weighty = 0.0;
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.insets = new Insets(10, 10, 20, 10);
+		pane.add(infoLabel, constraints);
+		
 		// Button back to main
 		btBack = new JButton("Volver");
 		btBack.setActionCommand("backFromCreate");
 		btBack.addActionListener(myListener);
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+		constraints.gridy = 5;
 		constraints.gridwidth = GridBagConstraints.REMAINDER;
 		constraints.gridheight = 1;
 		constraints.weighty = 1.0;
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.insets = new Insets(10, 10, 20, 10);
 		pane.add(btBack, constraints);
+		
 
 		this.add(pane);
 
+	}
+	
+	/**
+	 * Method for ckecking that all fields are ok
+	 * @return a Florist if fields are ok
+	 * 			null otherwise
+	 */
+	public Florist createProvisionalFlorist() {
+		Florist result= null;
+		if (fieldName.getText().isEmpty() ||fieldName.getText()==null) {
+			fieldName.setForeground(Color.RED);
+			fieldName.setText("La floristeria ha de tener un nombre");
+		} else {
+			fieldName.setForeground(Color.BLACK);
+			result= new Florist(fieldName.getText());
+			infoLabel.setText("La floristeria "+ fieldName.getText() + " ha sido creada." );
+		}
+		return result;
+	}
+	
+	/**
+	 * Method to inform everything went ok
+	 */
+	public void setOKLabel() {
+		infoLabel.setForeground(Color.BLACK);
+		infoLabel.setText("La floristeria "+ fieldName.getText() + " ha sido creada." );
 	}
 
 }

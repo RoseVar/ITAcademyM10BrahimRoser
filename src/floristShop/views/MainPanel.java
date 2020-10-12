@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,20 +16,39 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class MainPanel extends JPanel {
+import florist.Florist;
+import funcionalidades.ImplementedFuncionalities;
+
+/**
+ * @author Roser
+ */
+
+public class MainPanel extends JPanel{
 	// Atributes
 	private JButton btCreateFlorist;
+	private JButton btOpenFlorist;
 	private JLabel textCreateFlorist;
 	private JLabel textShowFlorist;
 	private JList<String> myFlorisList;
 	ActionListener myListener;
 	ListSelectionListener myListListener;
+	ImplementedFuncionalities myModel;
+	int selectedShop;
+	
 
 	// Constructor
-	public MainPanel(ActionListener listener) {
+	public MainPanel(ActionListener listener, ImplementedFuncionalities myModel) {
 		this.myListener = listener;
-		initComponents();
+		this.myModel= myModel;
+		selectedShop=0;
+		initComponents();		
+	}	
+	
+	//getter of selected item (it changes depending on the selected item of the Jlist)
+	public int getSelectedShop() {
+		return selectedShop;
 	}
+	
 
 	/**
 	 * Method for create the view and components and data of it
@@ -44,6 +64,8 @@ public class MainPanel extends JPanel {
 		pane.setLayout(mainLayout);
 
 		// Components for create florist shop
+		
+		//Label
 		GridBagConstraints constraints = new GridBagConstraints();
 		textCreateFlorist = new JLabel("Crea una floristeria nueva:");
 		constraints.gridx = 1;
@@ -52,12 +74,13 @@ public class MainPanel extends JPanel {
 		constraints.gridheight = 1;
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
-		constraints.anchor = GridBagConstraints.EAST;
+		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(40, 40, 30, 10);
 		pane.add(textCreateFlorist, constraints);
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 
+		//create button
 		btCreateFlorist = new JButton("Crear");
 		btCreateFlorist.setActionCommand("createFlorist");
 		btCreateFlorist.addActionListener(myListener);
@@ -73,7 +96,8 @@ public class MainPanel extends JPanel {
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 		
-		textCreateFlorist = new JLabel("Crea una floristeria nueva:");
+		//Label
+		textShowFlorist = new JLabel("Gestiona una floristeria existente:");
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
@@ -82,65 +106,52 @@ public class MainPanel extends JPanel {
 		constraints.weighty = 0.0;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(40, 40, 30, 10);
-		pane.add(textCreateFlorist, constraints);
+		pane.add(textShowFlorist, constraints);
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 
-		btCreateFlorist = new JButton("Crear");
-		btCreateFlorist.setActionCommand("createFlorist");
-		btCreateFlorist.addActionListener(myListener);
+		//open button
+		btOpenFlorist = new JButton("Abrir la seleccionada");
+		btOpenFlorist.setActionCommand("openFlorist");
+		btOpenFlorist.addActionListener(myListener);
 		constraints.gridx = 2;
 		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
-		constraints.weightx = 1.0;
+		constraints.weightx = 0.0;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.insets = new Insets(40, 40, 30, 10);
-		pane.add(btCreateFlorist, constraints);
+		pane.add(btOpenFlorist, constraints);
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 
-//		// Components for select a florist shop
-//		textShowFlorist = new JLabel("Gestiona una floristeria existente:");
-//		constraints.gridx = 1;
-//		constraints.gridy = 2;
-//		constraints.gridwidth = 2;
-//		constraints.gridheight = 1;
-//		constraints.weightx = 0.0;
-//		constraints.anchor = GridBagConstraints.WEST;
-//		constraints.fill = GridBagConstraints.HORIZONTAL;
-//		constraints.insets = new Insets(0, 40, 10, 10);
-//		pane.add(textShowFlorist, constraints);
-//		constraints.weightx = 0.0;
-//		constraints.weighty = 0.0;
-
-		String[] dataTest = { "1-Floristeria Pepa", "2-Floristeria Paco" }; // TODO borrar a la larga
-		myFlorisList = new JList<String>(dataTest); // TODO falta meter datos buenos como parámetro
+		//recover data of all florist
+		List<Florist> allFlorist= myModel.getMyFlorists();
+		String[] dataToShow = new String[allFlorist.size()];		
+		for (int i=0;i<allFlorist.size();i++) {
+			dataToShow[i]= allFlorist.get(i).getName();
+		};
+		//List of all florist
+		myFlorisList = new JList<String>(dataToShow); 
 		myFlorisList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		myFlorisList.setLayoutOrientation(JList.VERTICAL);
-		//myFlorisList.setVisibleRowCount(-1);
+		myFlorisList.setSelectedIndex(selectedShop);
 		myFlorisList.addListSelectionListener(new ListSelectionListener() {			
 			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				//int selected= e.getLastIndex();
-				//System.out.println("Seleccionado el item: "+selected);	
+			public void valueChanged(ListSelectionEvent e) {					
 				if (e.getValueIsAdjusting() == false) {
-	                int n = myFlorisList.getSelectedIndex();
-	                System.out.println("Seleccionado el item: "+n);	
+					//save the position of the item selected (same position in list of florist)	
+	                selectedShop= myFlorisList.getSelectedIndex();
 	            }
 			}
 			
 		});
-		
-		
-		
-		// TODO falta añadir el listener
 		constraints.gridx = 1;
 		constraints.gridy = 2;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
-		constraints.weightx = 0.0;
+		constraints.weightx = 1.0;
 		constraints.weighty = 0.50;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.BOTH;
@@ -149,8 +160,10 @@ public class MainPanel extends JPanel {
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 
+		//add all to panel
 		this.add(pane);
 
 	}
+	
 
 }

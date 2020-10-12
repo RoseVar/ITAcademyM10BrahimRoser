@@ -1,5 +1,9 @@
 package articles;
 
+/**
+ * @author Bhahim
+ */
+
 public class Decor extends Article{
 	
 	//Attributes of this class

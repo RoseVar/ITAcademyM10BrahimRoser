@@ -1,38 +1,57 @@
 package funcionalidades;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import florist.*;
-import articles.*;
+import articles.Decor;
+import articles.Flower;
+import articles.Tree;
+import florist.Florist;
 
 
+/**
+ * @author Brahim + Roser
+ */
 
 public class ImplementedFuncionalities {
 	
-	private static ArrayList<Florist> myFlorists = new ArrayList<Florist>();
-
-	public static void main(String[] args) {
+	private static List<Florist> myFlorists;
+	
+	public ImplementedFuncionalities() {
+		myFlorists = new ArrayList<Florist>();
+		loadTestData();	
+	}
+	
+	/**
+	 * Method for creating test data
+	 * so we can check the usability of our app
+	 */
+	private void loadTestData() {
+		Florist flo1= new Florist("Floristeria Ana");
+		flo1.addTree(new Tree("Roble", 12.5, 2));
+		flo1.addFlower(new Flower("Magnolia", 4.5, "Blanca"));
+		flo1.addDecor(new Decor("Maceta", 5.5, Decor.Materials.plastic));
+		myFlorists.add(flo1);
 		
-		//Here I have an example of how to execute to execute all the functionalities needes in my app
-		ImplementedFuncionalities.createFloristAction("Floristeria Pepa");//I create a florist shop
-		//I add a decor with its characteristics to my florist
-		ImplementedFuncionalities.addDecorToFlorist(ImplementedFuncionalities.myFlorists.get(0), 
-				"Jarrón chino", 3.23, Decor.Materials.plastic);
-		//Do the same for a flower
-		ImplementedFuncionalities.addFlowerToFlorist(ImplementedFuncionalities.myFlorists.get(0), "rosa", 2, "rojo");
-		//And for two trees
-		ImplementedFuncionalities.addTreeToFlorist(ImplementedFuncionalities.myFlorists.get(0), "naranjo", 2.21, 7.65);
-		ImplementedFuncionalities.addTreeToFlorist(ImplementedFuncionalities.myFlorists.get(0), "roble", 4.22, 32.32);
-		//I print what we have in the florist
-		System.out.println(
-		ImplementedFuncionalities.printStock(ImplementedFuncionalities.myFlorists.get(0)));
-		
+		Florist flo2= new Florist("Floristeria Luis");
+		flo2.addTree(new Tree("Pino", 10.0, 1.5));
+		flo2.addFlower(new Flower("Calendula", 2.5, "Amarilla"));
+		flo2.addDecor(new Decor("Banco", 225.25, Decor.Materials.wood));
+		myFlorists.add(flo2);		
+	}
 
+	//Getter of List of florist
+	public List<Florist> getMyFlorists() {
+		return myFlorists;
 	}
 	
 	//This method puts a new florist in our repository by name parameter
-	static void createFloristAction(String floristName) {
-		myFlorists.add(new Florist(floristName));
+	public Boolean createFloristAction(String floristName) {
+		Boolean resp= false; 
+		if (myFlorists.add(new Florist (floristName))) {
+			resp=true;
+		}
+		return resp;
 	}
 	
 	//This function creates a tree with the passed parameters and ads them to the repository

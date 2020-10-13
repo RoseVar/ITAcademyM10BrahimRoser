@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import articles.Decor;
-import florist.shops.Shops;
+import florist.Florist;
 import funcionalidades.ImplementedFuncionalities;
 
 /**
@@ -23,7 +23,7 @@ import funcionalidades.ImplementedFuncionalities;
 
 public class DecorationPanel extends JPanel implements ActionListener {
 	// Attributes
-	private ImplementedFuncionalities myModel;
+	private Florist myFlorist;
 	private int selectedShop;
 	// components
 	private JButton btSaveDecorationr;
@@ -37,9 +37,9 @@ public class DecorationPanel extends JPanel implements ActionListener {
 	private JTextField fieldPrice;
 
 	// Constructor
-	public DecorationPanel(ImplementedFuncionalities myModel, int selectedShop) {
-		this.myModel = myModel;
+	public DecorationPanel(int selectedShop) {	
 		this.selectedShop = selectedShop;
+		myFlorist = ImplementedFuncionalities.getFloristByPosition(this.selectedShop);	
 		initComponents();
 	}
 
@@ -197,10 +197,15 @@ public class DecorationPanel extends JPanel implements ActionListener {
 				//if Decor is not null
 				if (myDeco!=null) {
 					//Add to florist
-					this.myModel.getMyFlorists().get(this.selectedShop).addDecor(myDeco);
-					//if correct added
-					if (this.myModel.getMyFlorists().get(this.selectedShop).getDecors().contains(myDeco)) {
-						setOKLabel();//inform user
+					ImplementedFuncionalities.addDecorToFlorist(myFlorist, myDeco.getName(), 
+							myDeco.getPrice(), myDeco.getMaterial());
+					//check if correct added, if it is, inform the user
+					for (Decor d: ImplementedFuncionalities.getFloristByPosition(selectedShop).getDecors()){
+						if (d.getName().equalsIgnoreCase(myDeco.getName()) & d.getPrice()==myDeco.getPrice() &
+								d.getMaterial().equals(myDeco.getMaterial())) {
+							setOKLabel();
+							return;
+						}
 					};
 				}
 				break;

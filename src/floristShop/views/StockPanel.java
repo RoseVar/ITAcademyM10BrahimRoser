@@ -18,7 +18,6 @@ import funcionalidades.ImplementedFuncionalities;
 
 public class StockPanel extends JPanel {
 	// Atributes
-	private ImplementedFuncionalities myModel;
 	private int selectedShop;
 	private Florist myFlorist;
 	//components
@@ -26,10 +25,9 @@ public class StockPanel extends JPanel {
 	private JTextArea stockView;
 
 	// Constructor
-	public StockPanel(ImplementedFuncionalities myModel, int selectedShop) {
-		this.myModel= myModel;
+	public StockPanel( int selectedShop) {
 		this.selectedShop= selectedShop;
-		myFlorist= myModel.getMyFlorists().get(selectedShop);
+		myFlorist= ImplementedFuncionalities.getFloristByPosition(selectedShop);
 		initComponents();
 	}
 

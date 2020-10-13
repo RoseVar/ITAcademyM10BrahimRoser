@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import florist.Florist;
-import florist.shops.Shops;
 import funcionalidades.ImplementedFuncionalities;
 
 /**
@@ -16,8 +15,6 @@ import funcionalidades.ImplementedFuncionalities;
 
 public class MainFrame extends JFrame implements ActionListener {
     //Atributtes
-    //Shops myModel;
-    ImplementedFuncionalities myModel;
     ActionListener myListener;
     int selectedShop;
 
@@ -29,7 +26,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public MainFrame() {
 		myListener = this;
 		selectedShop=0;
-		this.myPanel = new MainPanel(myListener, this.myModel);
+		this.myPanel = new MainPanel(myListener);
 		//create elements
 		initComponents();
 
@@ -61,7 +58,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				pane = getContentPane();
 				pane.removeAll();			
 				// create new panel and validate
-				ManageFloristShopPanel myMFPanel = new ManageFloristShopPanel(myListener, myModel,shopSelected);
+				ManageFloristShopPanel myMFPanel = new ManageFloristShopPanel(myListener, shopSelected);
 				pane.add(myMFPanel);
 				validate();
 				repaint();
@@ -81,7 +78,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				Florist floToAdd= myFPanel.createProvisionalFlorist();
 				//if has recovered one florist, add to list of florists of model
 				if (floToAdd!=null) {
-					if (myModel.createFloristAction(floToAdd.getName())) { //if goes ok, inform user
+					if (ImplementedFuncionalities.createFloristAction(floToAdd.getName())) { //if goes ok, inform user
 						myFPanel.setOKLabel();
 					}
 				}
@@ -90,7 +87,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				pane = getContentPane();
 				pane.removeAll();
 				//re-create main panel so it recover the new florist created
-				this.myPanel = new MainPanel(myListener, this.myModel);	
+				this.myPanel = new MainPanel(myListener);	
 				pane.add(myPanel);
 				validate();
 				repaint();

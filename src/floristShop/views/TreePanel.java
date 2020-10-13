@@ -13,7 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import articles.Flower;
 import articles.Tree;
+import florist.Florist;
 import funcionalidades.ImplementedFuncionalities;
 
 /**
@@ -21,8 +23,8 @@ import funcionalidades.ImplementedFuncionalities;
  */
 
 public class TreePanel extends JPanel implements ActionListener {
-	// Atributes
-	private ImplementedFuncionalities myModel;
+	// Attributes
+	private Florist myFlorist;
 	private int selectedShop;
 	//components
 	private JButton btSaveTree;
@@ -36,9 +38,9 @@ public class TreePanel extends JPanel implements ActionListener {
 	private JTextField fieldPrice;
 
 	// Constructor
-	public TreePanel(ImplementedFuncionalities myModel, int selectedShop) {
-		this.myModel= myModel;
-		this.selectedShop= selectedShop;
+	public TreePanel(int selectedShop) {
+		this.selectedShop = selectedShop;
+		myFlorist = ImplementedFuncionalities.getFloristByPosition(this.selectedShop);	
 		initComponents();
 	}
 
@@ -196,10 +198,15 @@ public class TreePanel extends JPanel implements ActionListener {
 			//if Tree is not null
 			if (myTree!=null) {
 				//Add to florist
-				this.myModel.getMyFlorists().get(this.selectedShop).addTree(myTree);
-				//if correct added
-				if (this.myModel.getMyFlorists().get(this.selectedShop).getTrees().contains(myTree)) { //ckech if added
-					setOKLabel();//inform user
+				ImplementedFuncionalities.addTreeToFlorist(myFlorist, myTree.getName(), 
+						myTree.getPrice(), myTree.getHeight());
+				//check if correct added, if it is, inform the user
+				for (Tree t: ImplementedFuncionalities.getFloristByPosition(selectedShop).getTrees()){
+					if (t.getName().equalsIgnoreCase(myTree.getName()) & t.getPrice()==myTree.getPrice() &
+							t.getHeight()==myTree.getHeight()) {
+						setOKLabel();
+						return;
+					}
 				};
 			}
 			break;

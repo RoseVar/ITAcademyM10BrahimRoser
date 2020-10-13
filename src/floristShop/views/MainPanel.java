@@ -25,6 +25,7 @@ import funcionalidades.ImplementedFuncionalities;
 
 public class MainPanel extends JPanel{
 	// Atributes
+	int selectedShop;
 	private JButton btCreateFlorist;
 	private JButton btOpenFlorist;
 	private JLabel textCreateFlorist;
@@ -32,14 +33,10 @@ public class MainPanel extends JPanel{
 	private JList<String> myFlorisList;
 	ActionListener myListener;
 	ListSelectionListener myListListener;
-	ImplementedFuncionalities myModel;
-	int selectedShop;
-	
 
 	// Constructor
-	public MainPanel(ActionListener listener, ImplementedFuncionalities myModel) {
+	public MainPanel(ActionListener listener) {
 		this.myListener = listener;
-		this.myModel= myModel;
 		selectedShop=0;
 		initComponents();		
 	}	
@@ -127,7 +124,7 @@ public class MainPanel extends JPanel{
 		constraints.weighty = 0.0;
 
 		//recover data of all florist
-		List<Florist> allFlorist= myModel.getMyFlorists();
+		List<Florist> allFlorist= ImplementedFuncionalities.getMyFlorists();
 		String[] dataToShow = new String[allFlorist.size()];		
 		for (int i=0;i<allFlorist.size();i++) {
 			dataToShow[i]= allFlorist.get(i).getName();

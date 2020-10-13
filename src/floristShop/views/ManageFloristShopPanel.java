@@ -19,9 +19,9 @@ import funcionalidades.ImplementedFuncionalities;
 
 public class ManageFloristShopPanel extends JPanel implements ActionListener {
 	// Atributes
-	private ImplementedFuncionalities myModel;
 	private int selectedShop;
 	private Florist myFlorist;
+	
 	private JLabel floristName;
 	private JButton btAddTree;
 	private JButton btAddFlower;
@@ -33,13 +33,12 @@ public class ManageFloristShopPanel extends JPanel implements ActionListener {
 	int menuSelection; // 0--> none, 1-> add Tree, 2-> add Flower, 3-> add Decoration, 4-> show stock
 
 	// Constructor
-	public ManageFloristShopPanel(ActionListener listener, ImplementedFuncionalities myModel, int selectedShop) {
+	public ManageFloristShopPanel(ActionListener listener, int selectedShop) {
 		this.myGeneralListener = listener;
-		this.myModel = myModel;
 		this.selectedShop = selectedShop;
 		menuSelection = 0;
 		// recover the shop to manage from the list
-		myFlorist = this.myModel.getMyFlorists().get(this.selectedShop);		
+		myFlorist = ImplementedFuncionalities.getFloristByPosition(this.selectedShop);		
 		initComponents();
 	}
 
@@ -101,20 +100,20 @@ public class ManageFloristShopPanel extends JPanel implements ActionListener {
 		//3-> add Decoration panel, 4-> show stock panel
 		switch (menuSelection) {
 			case 1:
-				TreePanel myTPanel = new TreePanel(myModel, selectedShop);
+				TreePanel myTPanel = new TreePanel(selectedShop);
 				dataPanel = myTPanel;
 				break;
 			case 2:
-				FlowerPanel myFPanel = new FlowerPanel(myModel, selectedShop);
+				FlowerPanel myFPanel = new FlowerPanel(selectedShop);
 				dataPanel = myFPanel;
 				break;
 			case 3:
-				DecorationPanel myDPanel = new DecorationPanel(myModel, selectedShop);
+				DecorationPanel myDPanel = new DecorationPanel(selectedShop);
 				dataPanel = myDPanel;
 				break;
 			case 4:
 				// Create JPanel
-				StockPanel mySPanel = new StockPanel(myModel, selectedShop);
+				StockPanel mySPanel = new StockPanel(selectedShop);
 				dataPanel = mySPanel;
 				break;
 			default:

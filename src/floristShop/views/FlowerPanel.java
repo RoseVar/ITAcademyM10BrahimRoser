@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import articles.Flower;
+import articles.Tree;
+import florist.Florist;
 import funcionalidades.ImplementedFuncionalities;
 
 /**
@@ -22,8 +24,8 @@ import funcionalidades.ImplementedFuncionalities;
 
 public class FlowerPanel extends JPanel implements ActionListener {
 	// Atributes
-	private ImplementedFuncionalities myModel;
 	private int selectedShop;
+	private Florist myFlorist;
 	// components
 	private JButton btSaveFlower;
 	private JLabel floristName;
@@ -36,9 +38,9 @@ public class FlowerPanel extends JPanel implements ActionListener {
 	private JTextField fieldPrice;
 
 	// Constructor
-	public FlowerPanel(ImplementedFuncionalities myModel, int selectedShop) {
-		this.myModel = myModel;
-		this.selectedShop = selectedShop;
+	public FlowerPanel(int selectedShop) {
+		this.selectedShop= selectedShop;
+		myFlorist = ImplementedFuncionalities.getFloristByIndex(this.selectedShop);	
 		initComponents();
 	}
 
@@ -196,11 +198,16 @@ public class FlowerPanel extends JPanel implements ActionListener {
 				//if Flower is not null
 				if (myFlower != null) {
 					//Add to florist
-					this.myModel.getMyFlorists().get(this.selectedShop).addFlower(myFlower);
-					//if correct added
-					if (this.myModel.getMyFlorists().get(this.selectedShop).getFlowers().contains(myFlower)) { 
-						setOKLabel();// inform user
-					}					
+					ImplementedFuncionalities.addFlowerToFlorist(myFlorist, myFlower.getName(), 
+							myFlower.getPrice(), myFlower.getColor());
+					//check if added, if it is, inform the user
+					for (Flower f: ImplementedFuncionalities.getFloristByIndex(selectedShop).getFlowers()) {
+						if (myFlower.getName().equals(f.getName()) & myFlower.getColor().equals(f.getColor()) & 
+								myFlower.getPrice()==f.getPrice()) {
+							setOKLabel();
+							return;
+						}
+					}				
 				}
 				break;
 			default:

@@ -1,5 +1,6 @@
 package floristShop.app;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,8 @@ import articles.Decor;
 import articles.Flower;
 import articles.Tree;
 import florist.Florist;
+
 import floristShop.views.MainFrame;
-import funcionalidades.ImplementedFuncionalities;
 
 /**
  * @author Roser
@@ -16,6 +17,7 @@ import funcionalidades.ImplementedFuncionalities;
 public class FloristShopApp {
 
 	public static void main(String[] args) {				    
+
 		    FloristShopApp myFloristManager = new FloristShopApp();
 	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	            @Override
@@ -32,9 +34,10 @@ public class FloristShopApp {
 	     * Method to star running our application.
 	     */
 	    private void run() {
-	        //Instantiate model and main frame
+	        //Load data in static model and main frame
 	    	loadTestData();
 		    MainFrame myFrame= new MainFrame();
+
 	        //Put it in the center of screen
 	        myFrame.setLocationRelativeTo(null);
 	        //set visible the main frame

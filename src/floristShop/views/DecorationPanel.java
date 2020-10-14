@@ -8,9 +8,11 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import articles.Decor;
@@ -21,9 +23,10 @@ import funcionalidades.ImplementedFuncionalities;
  * @author Roser
  */
 
+
 public class DecorationPanel extends JPanel implements ActionListener {
 	// Attributes
-	private Florist myFlorist;
+	//private ImplementedFuncionalities myModel;
 	private int selectedShop;
 	// components
 	private JButton btSaveDecorationr;
@@ -33,13 +36,18 @@ public class DecorationPanel extends JPanel implements ActionListener {
 	private JLabel priceDecoration;
 	private JLabel infoLabel;
 	private JTextField fieldName;
-	private JTextField fieldMaterial;
+	private JRadioButton plastic;
+	private JRadioButton wood;
+	private ButtonGroup chooseMaterial;
+	private String decorName;
+	private double decorPrice;
+	private Decor.Materials decorMaterial;
+//	private JTextField fieldMaterial;
 	private JTextField fieldPrice;
 
 	// Constructor
-	public DecorationPanel(int selectedShop) {	
+	public DecorationPanel( int selectedShop) {
 		this.selectedShop = selectedShop;
-		myFlorist = ImplementedFuncionalities.getFloristByPosition(this.selectedShop);	
 		initComponents();
 	}
 
@@ -99,8 +107,31 @@ public class DecorationPanel extends JPanel implements ActionListener {
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 
+
+		// Radio button to set material
+		//fieldMaterial = new JTextField(40);
+		plastic = new JRadioButton("plastic", true);
+		wood = new JRadioButton("wood");
+		chooseMaterial = new ButtonGroup();
+		chooseMaterial.add(plastic);
+		chooseMaterial.add(wood);
+		constraints.gridx = 2;
+		constraints.gridy = 2;
+		constraints.gridwidth = 2;
+		constraints.gridheight = 1;
+		constraints.weightx = 2.0;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.insets = new Insets(0, 20, 10, 10);
+		JPanel chosenOptions = new JPanel();
+		chosenOptions.add(plastic);
+		chosenOptions.add(wood);
+		pane.add(chosenOptions, constraints);
+		constraints.weightx = 0.0;
+		constraints.weighty = 0.0;
+
 		// label set material
-		materialDecoration = new JLabel("Indica de qué material es (plastic/wood):");
+		materialDecoration = new JLabel("Indica de qué material es (escoja una opción):");
 		constraints.gridx = 1;
 		constraints.gridy = 2;
 		constraints.gridwidth = 1;
@@ -113,20 +144,7 @@ public class DecorationPanel extends JPanel implements ActionListener {
 		constraints.weightx = 0.0;
 		constraints.weighty = 0.0;
 
-		// Text field to set material
-		fieldMaterial = new JTextField(40);
-		constraints.gridx = 2;
-		constraints.gridy = 2;
-		constraints.gridwidth = 2;
-		constraints.gridheight = 1;
-		constraints.weightx = 2.0;
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.insets = new Insets(0, 20, 10, 10);
-		pane.add(fieldMaterial, constraints);
-		constraints.weightx = 0.0;
-		constraints.weighty = 0.0;
-
+		
 		// label set price
 		priceDecoration = new JLabel("Indica de qué precio tiene:");
 		constraints.gridx = 1;
@@ -190,27 +208,18 @@ public class DecorationPanel extends JPanel implements ActionListener {
 		// Recover action
 		String action = e.getActionCommand();
 		// and depending on it
-		switch (action) {
-			case "addDeco":
-				//create a Decor article from the form fields
-				Decor myDeco= decoDataCorrect();
-				//if Decor is not null
-				if (myDeco!=null) {
-					//Add to florist
-					ImplementedFuncionalities.addDecorToFlorist(myFlorist, myDeco.getName(), 
-							myDeco.getPrice(), myDeco.getMaterial());
-					//check if correct added, if it is, inform the user
-					for (Decor d: ImplementedFuncionalities.getFloristByPosition(selectedShop).getDecors()){
-						if (d.getName().equalsIgnoreCase(myDeco.getName()) & d.getPrice()==myDeco.getPrice() &
-								d.getMaterial().equals(myDeco.getMaterial())) {
-							setOKLabel();
-							return;
-						}
-					};
-				}
-				break;
-			default:
-				break;
+		if (action.equals("addDeco")) {
+			//create a Decor article from the form fields
+			boolean myDecoResult= decoDataCorrect();
+			//if Decor is not null
+			if (myDecoResult) {
+				//Add to florist
+				Florist myFlorist= ImplementedFuncionalities.getMyFlorists().get(selectedShop);
+				ImplementedFuncionalities.addDecorToFlorist(myFlorist, decorName, decorPrice, decorMaterial);
+				//if correct added
+				setOKLabel();//inform user
+			}
+
 		}
 
 	}
@@ -220,46 +229,45 @@ public class DecorationPanel extends JPanel implements ActionListener {
 	 * 
 	 * @return a decoration if all information is given null otherwise
 	 */
-	private Decor decoDataCorrect() {
-		Decor result = null;
-		String name = fieldName.getText();
-		String provMaterial = fieldMaterial.getText();
+	private boolean decoDataCorrect() {
+		boolean result = false;
+		decorName = fieldName.getText();
+		
+		boolean materialValid = false;
+		if (plastic.isSelected()) {
+			decorMaterial= Decor.Materials.plastic;
+			materialValid=true;
+		}else if (wood.isSelected()) {
+
+			decorMaterial= Decor.Materials.wood;
+			materialValid=true;
+		}else {	
+		}
 		String priceString = fieldPrice.getText();
-		Decor.Materials material=null;
 		// if all fields are full (not null, not "")
-		if (name != null & !"".equals(name) & provMaterial != null & !"".equals(provMaterial) & priceString != null
+		if (decorName != null & !"".equals(decorName)  & priceString != null
 				& !"".equals(priceString)) {
 			// try to cast price to double
 			try {
-				Double price = Double.valueOf(priceString);
-				Boolean materialValid= false;
-				if (Decor.Materials.plastic.name().equalsIgnoreCase(provMaterial)) {
-					material= Decor.Materials.plastic;
-					materialValid=true;		
-				} else if (Decor.Materials.wood.name().equalsIgnoreCase(provMaterial)) {
-					material= Decor.Materials.wood;
-					materialValid=true;	
-				} 
-				if (materialValid) {
-					// if we have arrived here is because everything is ok
-					result = new Decor(name, price, material);
-				} else {
+				decorPrice = Double.valueOf(priceString);
+				// if we have arrived here is because everything is ok
+				result = true;
+				 if(!materialValid) {
 					//if material is not one of the enums
 					infoLabel.setForeground(Color.red);
 					infoLabel.setText("El material tiene que wood o plastic");
-					result=null;
-				}
+					result=false;
+				 }
 				//if there is any problem in casting to double... result null	
 			} catch (Exception e) {
 				infoLabel.setForeground(Color.red);
 				infoLabel.setText("Precio no es un número");
-				result = null;
+				//result = false;
 			}
 
 		} else {
 			infoLabel.setForeground(Color.red);
 			infoLabel.setText("Todos los campos son obligatorios");
-			result = null;
 		}
 		return result;
 	}
@@ -273,3 +281,4 @@ public class DecorationPanel extends JPanel implements ActionListener {
 	}
 
 }
+
